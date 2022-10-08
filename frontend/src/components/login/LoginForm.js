@@ -94,7 +94,7 @@ function LoginForm({ setVisible }) {
             )}
           </Formik>
 
-          <Link to="/forgot" className="forgot_password">
+          <Link to="/reset" className="forgot_password">
             Forgot Password?
           </Link>
           <DotLoader color="#1876f2" loading={loading} size={30} />

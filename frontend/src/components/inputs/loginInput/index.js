@@ -8,12 +8,19 @@ function LoginInput({ placeholder, bottom, ...props }) {
   const desktopView = useMediaQuery({
     query: "(min-width: 850px)",
   });
+  const view1050 = useMediaQuery({
+    query: "(max-width: 1050px)",
+  });
   return (
     <div className="input_wrap">
       {meta.touched && meta.error && !bottom && (
         <div
           className={
-            desktopView ? "input_error input_error_desktop" : "input_error"
+            desktopView && view1050 && field.name === "password"
+              ? "input_error input_error_desktop err_res_password"
+              : desktopView
+              ? "input_error input_error_desktop"
+              : "input_error"
           }
           style={{ transform: "translateY(2px)" }}
         >
@@ -37,7 +44,11 @@ function LoginInput({ placeholder, bottom, ...props }) {
       {meta.touched && meta.error && bottom && (
         <div
           className={
-            desktopView ? "input_error input_error_desktop" : "input_error"
+            desktopView && view1050 && field.name === "conf_password"
+              ? "input_error conf_password_error"
+              : desktopView
+              ? "input_error input_error_desktop"
+              : "input_error"
           }
           style={{ transform: "translateY(2px)" }}
         >
@@ -45,7 +56,7 @@ function LoginInput({ placeholder, bottom, ...props }) {
           {meta.touched && meta.error && (
             <div
               className={
-                desktopView ? "error_arrow_right" : "error_arrow_bottom"
+                desktopView ? "error_arrow_left" : "error_arrow_bottom"
               }
             ></div>
           )}
