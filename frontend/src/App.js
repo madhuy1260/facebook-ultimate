@@ -10,24 +10,12 @@ import CreatePostPopup from "./components/createPostPopup/index.js";
 import { useSelector } from "react-redux";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "POSTS_REQUEST":
-      return { ...state, loading: true, error: "" };
-    case "POSTS_SUCCESS":
-      return { ...state, loading: false, error: "", posts: action.payload };
-    case "POSTS_ERROR":
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-}
+import { postsReducer } from "./functions/reducers.js";
 
 function App() {
   const [createPostVisible, setCreatePostVisible] = useState(false);
   const { user } = useSelector((state) => ({ ...state }));
-  const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, posts }, dispatch] = useReducer(postsReducer, {
     loading: false,
     posts: [],
     error: "",
@@ -71,6 +59,7 @@ function App() {
           />
           <Route path="/activate/:token" element={<Activate />} exact />
           <Route path="/profile" element={<Profile />} exact />
+          <Route path="/profile/:username" element={<Profile />} exact />
         </Route>
         <Route element={<NotLoggedInRoutes />}>
           <Route path="/login" element={<Login />} exact />

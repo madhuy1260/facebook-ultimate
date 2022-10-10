@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import AddToYourPost from "./AddToYourPost";
@@ -48,7 +48,7 @@ function CreatePostPopup({ user, setCreatePostVisible }) {
       const postImages = images.map((img) => {
         return dataURItoBlob(img);
       });
-      const path = `${user.username}/post Images`;
+      const path = `${user.username}/post_images`;
       let formData = new FormData();
       formData.append("path", path);
       postImages.forEach((image) => {

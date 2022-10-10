@@ -103,7 +103,7 @@
   position: absolute;
   right: 0;
   bottom: 2.5rem;
-  height: 300px;
+  /* height: 300px; */
 }
 .rlmove {
   right: -22rem;

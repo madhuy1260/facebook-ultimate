@@ -240,3 +240,17 @@ exports.changePassword = async (req, res) => {
   await User.findOneAndUpdate({ email }, { password: cryptedPassword });
   return res.status(200).json({ message: "Okay" });
 };
+
+exports.getProfile = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const profile = await User.findOne({ username }).select("-password");
+    if (profile.length === 0) {
+      res.json({ ok: false });
+    } else {
+      res.send(profile);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
