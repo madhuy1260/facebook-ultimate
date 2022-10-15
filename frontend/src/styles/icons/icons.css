@@ -756,3 +756,12 @@
   background-repeat: no-repeat;
   display: inline-block;
 }
+.public_icon {
+  background-image: url(../../../public/icons/public.png);
+  background-position: 100px - 109px;
+  background-size: auto;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}

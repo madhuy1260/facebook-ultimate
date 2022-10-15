@@ -58,8 +58,16 @@ function App() {
             exact
           />
           <Route path="/activate/:token" element={<Activate />} exact />
-          <Route path="/profile" element={<Profile />} exact />
-          <Route path="/profile/:username" element={<Profile />} exact />
+          <Route
+            path="/profile"
+            element={<Profile setCreatePostVisible={setCreatePostVisible} />}
+            exact
+          />
+          <Route
+            path="/profile/:username"
+            element={<Profile setCreatePostVisible={setCreatePostVisible} />}
+            exact
+          />
         </Route>
         <Route element={<NotLoggedInRoutes />}>
           <Route path="/login" element={<Login />} exact />

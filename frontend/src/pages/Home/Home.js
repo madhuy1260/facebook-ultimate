@@ -15,7 +15,7 @@ function Home({ setCreatePostVisible, posts }) {
   const [height, setHeight] = useState();
 
   useEffect(() => {
-    console.log(middle.current.clientHeight);
+    // console.log(middle.current.clientHeight);
     setHeight(middle.current.clientHeight);
   }, []);
 

@@ -43,10 +43,10 @@ const userSchema = mongoose.Schema(
     bMonth: { type: Number, required: true, trim: true },
     bDay: { type: Number, required: true, trim: true },
     verified: { type: Boolean, default: false },
-    friends: { type: Array, default: [] },
-    following: { type: Array, default: [] },
-    followers: { type: Array, default: [] },
-    requests: { type: Array, default: [] },
+    friends: [{ type: ObjectId, ref: "User" }],
+    following: [{ type: ObjectId, ref: "User" }],
+    followers: [{ type: ObjectId, ref: "User" }],
+    requests: [{ type: ObjectId, ref: "User" }],
     search: [
       {
         user: {
@@ -63,7 +63,7 @@ const userSchema = mongoose.Schema(
       highSchool: { type: String },
       college: { type: String },
       currentCity: { type: String },
-      homeTown: { type: String },
+      hometown: { type: String },
       relationship: {
         type: String,
         enum: ["Single", "In a Relationship", "Married", "Divorced"],

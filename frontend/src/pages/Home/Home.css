@@ -159,6 +159,33 @@
     width: 20px;
   }
 }
+
+@media (max-width: 400px) {
+  .createPost,
+  .post {
+    margin-top: 1rem;
+  }
+  .createPost,
+  .home_middle,
+  .post {
+    width: 98%;
+    margin: 1 auto;
+  }
+  .send_verification {
+    width: 98%;
+    margin: 0 auto;
+  }
+  .stories {
+    grid-template-columns: repeat(6, 13w);
+    padding-left: 10px;
+  }
+  .home_middle {
+    margin: 56px auto;
+  }
+  .createPost_body {
+    padding: 5px 0;
+  }
+}
 /*------------------Activate Popup----------------------*/
 .popup {
   position: relative;
