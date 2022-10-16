@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import { postsReducer } from "./functions/reducers.js";
+import Friends from "./pages/friends/index.js";
 
 function App() {
   const [createPostVisible, setCreatePostVisible] = useState(false);
@@ -46,6 +47,8 @@ function App() {
         <CreatePostPopup
           user={user}
           setCreatePostVisible={setCreatePostVisible}
+          posts={posts}
+          dispatch={dispatch}
         />
       )}
       <Routes>
@@ -53,20 +56,43 @@ function App() {
           <Route
             path="/"
             element={
-              <Home setCreatePostVisible={setCreatePostVisible} posts={posts} />
+              <Home
+                setCreatePostVisible={setCreatePostVisible}
+                posts={posts}
+                loading={loading}
+                getAllPosts={getAllPosts}
+              />
             }
             exact
           />
           <Route path="/activate/:token" element={<Activate />} exact />
           <Route
             path="/profile"
-            element={<Profile setCreatePostVisible={setCreatePostVisible} />}
+            element={
+              <Profile
+                setCreatePostVisible={setCreatePostVisible}
+                getAllPosts={getAllPosts}
+              />
+            }
             exact
           />
           <Route
             path="/profile/:username"
             element={<Profile setCreatePostVisible={setCreatePostVisible} />}
             exact
+            getAllPosts={getAllPosts}
+          />
+          <Route
+            path="/friends"
+            element={<Friends setCreatePostVisible={setCreatePostVisible} />}
+            exact
+            getAllPosts={getAllPosts}
+          />
+          <Route
+            path="/friends/:type"
+            element={<Friends setCreatePostVisible={setCreatePostVisible} />}
+            exact
+            getAllPosts={getAllPosts}
           />
         </Route>
         <Route element={<NotLoggedInRoutes />}>

@@ -11,7 +11,13 @@ import PostError from "./PostError";
 import dataURItoBlob from "../../helpers/dataURItoBlob";
 import { uploadImages } from "../../functions/uploadImages";
 
-function CreatePostPopup({ user, setCreatePostVisible }) {
+function CreatePostPopup({
+  user,
+  setCreatePostVisible,
+  dispatch,
+  posts,
+  profile,
+}) {
   const [text, setText] = useState("");
   const [showPrev, setShowPrev] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,7 +42,11 @@ function CreatePostPopup({ user, setCreatePostVisible }) {
         user.token
       );
       setLoading(false);
-      if (response === "Okay") {
+      if (response.status === "Okay") {
+        dispatch({
+          type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+          payload: [response.data, ...posts],
+        });
         setBackground("");
         setText("");
         setCreatePostVisible(false);
@@ -64,7 +74,11 @@ function CreatePostPopup({ user, setCreatePostVisible }) {
         user.token
       );
       setLoading(false);
-      if (resp === "Okay") {
+      if (resp.status === "Okay") {
+        dispatch({
+          type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+          payload: [resp.data, ...posts],
+        });
         setText("");
         setImages("");
         setCreatePostVisible(false);
@@ -81,8 +95,12 @@ function CreatePostPopup({ user, setCreatePostVisible }) {
         user.id,
         user.token
       );
+      dispatch({
+        type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+        payload: [response.data, ...posts],
+      });
       setLoading(false);
-      if (response === "Okay") {
+      if (response.status === "Okay") {
         setBackground("");
         setText("");
         setCreatePostVisible(false);

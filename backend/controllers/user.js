@@ -12,6 +12,7 @@ const { sendVerificationEmail, sendResetCode } = require("../helpers/mailer");
 const Code = require("../models/Code");
 const generateCode = require("../helpers/generateCode");
 // const { request } = require("gaxios");
+const mongoose = require("mongoose");
 
 exports.register = async (req, res) => {
   try {
@@ -518,6 +519,81 @@ exports.deleteRequest = async (req, res) => {
         .status(400)
         .json({ message: "You can't delete request from yourself" });
     }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.search = async (req, res) => {
+  try {
+    const searchTerm = req.params.searchTerm;
+    const results = await User.find({
+      $text: { $search: searchTerm },
+    }).select("first_name last_name username picture");
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.addToSearchHistory = async (req, res) => {
+  try {
+    const { searchUser } = req.body;
+    const search = { user: searchUser, createdAt: new Date() };
+    const user = await User.findById(req.user.id);
+    const check = user.search.find((x) => x.user.toString() === searchUser);
+    if (check) {
+      await User.updateOne(
+        { _id: req.user.id, "search._id": check._id },
+        {
+          $set: { "search.$.createdAt": new Date() },
+        }
+      );
+    } else {
+      await User.findByIdAndUpdate(req.user.id, { $push: { search } });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getSearchHistory = async (req, res) => {
+  try {
+    const results = await User.findById(req.user.id)
+      .select("search")
+      .populate("search.user", "first_name last_name username picture");
+    res.json(results.search);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.removeFromSearch = async (req, res) => {
+  try {
+    const { searchUser } = req.body;
+    await User.updateOne(
+      { _id: req.user.id },
+      { $pull: { search: { user: searchUser } } }
+    );
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getFriendsPageInfos = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+      .select("friends requests")
+      .populate("friends", "first_name last_name picture username")
+      .populate("requests", "first_name last_name picture username");
+    const sentRequests = await User.find({
+      requests: mongoose.Types.ObjectId(req.user.id),
+    }).select("first_name last_name picture username");
+    res.json({
+      friends: user.friends,
+      requests: user.requests,
+      sentRequests,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

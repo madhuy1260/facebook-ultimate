@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./styles.css";
 import { reactPost } from "../../functions/post";
 import Comment from "./Comment";
@@ -19,6 +19,7 @@ export default function Post({ post, user, profile }) {
   const [total, setTotal] = useState(0);
   const [comments, setComments] = useState([]);
   const [count, setCount] = useState(1);
+  const [checkSaved, setCheckSaved] = useState();
 
   useEffect(() => {
     getPostReacts();
@@ -33,6 +34,7 @@ export default function Post({ post, user, profile }) {
     setReacts(res.reacts);
     setCheck(res.check);
     setTotal(res.total);
+    setCheckSaved(res.checkSaved);
   };
 
   // console.log(comments);
@@ -66,8 +68,13 @@ export default function Post({ post, user, profile }) {
     setCount((prev) => prev + 3);
   };
 
+  const postRef = useRef(null);
   return (
-    <div className="post" style={{ width: `${profile && "100%"}` }}>
+    <div
+      className="post"
+      style={{ width: `${profile && "100%"}` }}
+      ref={postRef}
+    >
       <div className="post_header">
         <Link
           to={`/profile/${post.user.username}`}
@@ -166,9 +173,13 @@ export default function Post({ post, user, profile }) {
                 })
                 .slice(0, 3)
                 .map(
-                  (react) =>
+                  (react, i) =>
                     react.count > 0 && (
-                      <img src={`../../../reacts/${react.react}.svg`} alt="" />
+                      <img
+                        src={`../../../reacts/${react.react}.svg`}
+                        alt=""
+                        key={i}
+                      />
                     )
                 )}
           </div>
@@ -267,6 +278,12 @@ export default function Post({ post, user, profile }) {
           postUserId={post?.user?._id}
           imagesLength={post?.images?.length}
           setShowMenu={setShowMenu}
+          postId={post._id}
+          token={user.token}
+          checkSaved={checkSaved}
+          setCheckSaved={setCheckSaved}
+          images={post.images}
+          postRef={postRef}
         />
       )}
     </div>
