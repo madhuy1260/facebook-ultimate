@@ -2,7 +2,7 @@ import React from "react";
 import Moment from "react-moment";
 
 export default function Comment({ comment }) {
-  console.log(comment);
+  // console.log(comment);
   return (
     <div className="comment">
       <img src={comment.commentBy.picture} alt="" className="comment_img" />

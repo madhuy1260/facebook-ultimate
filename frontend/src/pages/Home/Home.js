@@ -8,6 +8,7 @@ import CreatePost from "../../components/createPost";
 import SendVerification from "../../components/home/sendVerification";
 import Post from "../../components/post";
 import "./Home.css";
+import { HashLoader } from "react-spinners";
 
 function Home({ setCreatePostVisible, posts, loading, getAllPosts }) {
   const { user } = useSelector((state) => ({ ...state }));
@@ -27,11 +28,17 @@ function Home({ setCreatePostVisible, posts, loading, getAllPosts }) {
         <Stories />
         {user.verified === false && <SendVerification user={user} />}
         <CreatePost user={user} setCreatePostVisible={setCreatePostVisible} />
-        <div className="posts">
-          {posts.map((post) => (
-            <Post post={post} key={posts._id} user={user} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="skeleton_loader">
+            <HashLoader color="#1876f2" />
+          </div>
+        ) : (
+          <div className="posts">
+            {posts.map((post, i) => (
+              <Post post={post} key={i} user={user} />
+            ))}
+          </div>
+        )}
       </div>
       <RightHome user={user} />
     </div>

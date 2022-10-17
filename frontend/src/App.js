@@ -15,7 +15,7 @@ import Friends from "./pages/friends/index.js";
 
 function App() {
   const [createPostVisible, setCreatePostVisible] = useState(false);
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, darkTheme } = useSelector((state) => ({ ...state }));
   const [{ loading, error, posts }, dispatch] = useReducer(postsReducer, {
     loading: false,
     posts: [],
@@ -42,7 +42,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={darkTheme && "dark"}>
       {createPostVisible && (
         <CreatePostPopup
           user={user}

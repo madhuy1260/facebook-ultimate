@@ -6,6 +6,7 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import "./styles/icons/dark.css";
 import rootReducer from "./reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 

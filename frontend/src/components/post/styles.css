@@ -41,6 +41,7 @@
   font-weight: 600;
   line-height: 19px;
   cursor: pointer;
+  color: var(--color-primary);
 }
 .updated_p {
   color: var(--color-secondary);
@@ -65,6 +66,9 @@
 }
 .post_text {
   padding: 0 15px 10px 15px;
+}
+.post_bg_text {
+  color: ;
 }
 /*-----------------------------GRID IMAGES----------------*/
 .grid_1 img {
